@@ -2,15 +2,15 @@ import { useState } from "react";
 import Image from "next/image";
 
 const images = [
-  { src: "/img/abstract.jpg", title: "Абстрактне мистецтво" },
-  { src: "/img/watercolor.jpg", title: "Акварель" },
-  { src: "/img/minimal.jpg", title: "Мінімалізм" },
-  { src: "/img/popart.jpg", title: "Поп-арт" },
-  { src: "/img/retro.jpg", title: "Ретро стиль" },
-  { src: "/img/futurism.jpg", title: "Футуризм" },
-  { src: "/img/autumn.jpg", title: "Осінь" },
-  { src: "/img/graffiti.jpg", title: "Графіті" },
-  { src: "/img/pixel.jpg", title: "Піксельна" },
+  { src: "/img/abstract.png", title: "Абстрактне мистецтво" },
+  { src: "/img/watercolor.png", title: "Акварель" },
+  { src: "/img/minimal.png", title: "Мінімалізм" },
+  { src: "/img/popart.png", title: "Поп-арт" },
+  { src: "/img/retro.png", title: "Ретро стиль" },
+  { src: "/img/futurism.png", title: "Футуризм" },
+  { src: "/img/autumn.png", title: "Осінь" },
+  { src: "/img/graffiti.png", title: "Графіті" },
+  { src: "/img/pixel.png", title: "Піксельна" },
 ];
 
 export default function Home() {
