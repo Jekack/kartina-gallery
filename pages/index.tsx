@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 const images = [
@@ -13,7 +14,7 @@ const images = [
   { src: "/img/pixel.png", title: "Піксельна" },
 ];
 
-export default function Home() {
+export default function GalleryPage() {
   const [index, setIndex] = useState(0);
   const current = images[index];
 
@@ -21,29 +22,33 @@ export default function Home() {
   const prev = () => setIndex((index - 1 + images.length) % images.length);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#111', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>Галерея КАРТИНИ</h1>
-      <p style={{ maxWidth: '600px', textAlign: 'center', color: '#ccc', marginBottom: '2rem' }}>
+    <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-4">
+      <h1 className="text-4xl font-bold mb-4">Галерея КАРТИНИ</h1>
+      <p className="max-w-xl text-center text-neutral-400 mb-8">
         Ця віртуальна колекція — подорож крізь стиль, колір і настрій. Автор надихнувся роботами <strong>Головного героя</strong>, щоб створити унікальний набір візуальних емоцій. Кожна картина — окремий світ.
       </p>
 
-      <div style={{ position: 'relative', width: '100%', maxWidth: '800px', aspectRatio: '4 / 3', border: '4px solid white', borderRadius: '1rem', overflow: 'hidden', boxShadow: '0 0 30px rgba(255,255,255,0.1)' }}>
+      <div className="relative w-full max-w-2xl aspect-[4/3] border-4 border-white rounded-xl overflow-hidden shadow-lg">
         <Image
           src={current.src}
           alt={current.title}
           fill
-          style={{ objectFit: 'contain' }}
+          className="object-contain"
         />
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
-          <button onClick={prev} style={{ backgroundColor: 'rgba(0,0,0,0.4)', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer' }}>⬅ Назад</button>
-          <button onClick={next} style={{ backgroundColor: 'rgba(0,0,0,0.4)', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer' }}>Вперед ➡</button>
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <Button onClick={prev} variant="ghost" className="text-white bg-black/40 hover:bg-black/60">
+            ⬅ Назад
+          </Button>
+          <Button onClick={next} variant="ghost" className="text-white bg-black/40 hover:bg-black/60">
+            Вперед ➡
+          </Button>
         </div>
       </div>
 
-      <div style={{ marginTop: '1rem', fontSize: '1.2rem', textAlign: 'center' }}>{current.title}</div>
+      <div className="mt-4 text-lg text-center">{current.title}</div>
 
-      <footer style={{ marginTop: '2rem', color: '#aaa', fontSize: '0.9rem', textAlign: 'center' }}>
-        Контакти: <a href="https://t.me/jeffersonx" target="_blank" style={{ textDecoration: 'underline', color: '#fff' }}>Телеграм @jeffersonx</a>
+      <footer className="mt-12 text-neutral-400 text-sm text-center">
+        Контакти: <a href="https://t.me/jeffersonx" target="_blank" className="underline">Телеграм @jeffersonx</a>
       </footer>
     </div>
   );
