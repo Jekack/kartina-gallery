@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/router';
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
@@ -56,6 +57,11 @@ export default function Home({ images }: { images: { src: string; title: string;
   const [selected, setSelected] = useState<null | { src: string; title: string; description: string }>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const { t } = useTranslation('common');
+  const router = useRouter();
+
+  const changeLanguage = (lng: string) => {
+    router.push(router.pathname, router.asPath, { locale: lng });
+  };
 
   return (
     <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-8`}>
@@ -71,11 +77,19 @@ export default function Home({ images }: { images: { src: string; title: string;
         <meta property="og:image" content="/preview.jpg" />
       </Head>
 
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-center w-full">{t('title')}</h1>
+      <div className="flex justify-between items-start mb-8 relative">
+        <h1 className="text-4xl font-bold text-center w-full mt-4">{t('title')}</h1>
+
+        {/* Перемикач мови */}
+        <div className="absolute left-8 top-4 flex space-x-2">
+          <button onClick={() => changeLanguage('uk')} className="border px-2 py-1 rounded">🇺🇦</button>
+          <button onClick={() => changeLanguage('en')} className="border px-2 py-1 rounded">🇬🇧</button>
+        </div>
+
+        {/* Перемикач теми */}
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="absolute right-8 top-8 border px-3 py-1 rounded"
+          className="absolute right-8 top-16 border px-3 py-1 rounded"
         >
           {theme === 'dark' ? t('themeLight') : t('themeDark')}
         </button>
@@ -83,12 +97,12 @@ export default function Home({ images }: { images: { src: string; title: string;
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {images.map((img, index) => (
-          <div key={index} className="rounded-xl overflow-hidden shadow-lg">
+          <div key={index} className="rounded-xl overflow-hidden shadow-lg scale-90">
             <Image
               src={img.src}
               alt={img.title}
-              width={500}
-              height={500}
+              width={350}
+              height={350}
               layout="responsive"
               objectFit="cover"
               className="cursor-pointer hover:scale-105 transition"
@@ -109,7 +123,7 @@ export default function Home({ images }: { images: { src: string; title: string;
         ))}
       </div>
 
-      {selected ? createPortal(
+      {selected && createPortal(
         <div
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
           onClick={() => setSelected(null)}
@@ -142,7 +156,7 @@ export default function Home({ images }: { images: { src: string; title: string;
           </div>
         </div>,
         document.body
-      ) : null}
+      )}
     </main>
   );
 }
