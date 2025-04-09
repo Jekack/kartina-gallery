@@ -126,5 +126,7 @@ export default function Home({ images }: { images: { src: string; title: string;
   </div>,
   document.body
 )}
-    )}
-</main> // 
+  
+</main> 
+    );
+}
