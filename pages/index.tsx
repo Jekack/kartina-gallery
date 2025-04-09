@@ -89,20 +89,34 @@ export default function Home({ images }: { images: { src: string; title: string;
         ))}
       </div>
 
-     {selected && createPortal(
+    {selected && createPortal(
   <div
     className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
     onClick={() => setSelected(null)}
   >
-    <div className="w-full max-w-5xl bg-neutral-800 p-6 rounded-xl shadow-lg">
+    <div
+      className="relative w-full max-w-[80%] max-h-[80vh] overflow-y-auto bg-neutral-800 p-6 rounded-xl shadow-lg"
+      onClick={(e) => e.stopPropagation()} // щоб клік по вмісту не закривав
+    >
+      {/* Хрестик закрити */}
+      <button
+        className="absolute top-3 right-3 text-white text-2xl hover:text-red-500"
+        onClick={() => setSelected(null)}
+      >
+        &times;
+      </button>
+
+      {/* Зображення */}
       <Image
         src={selected.src}
         alt={selected.title}
         width={1200}
         height={800}
-        objectFit="contain"
-        className="rounded-lg"
+        style={{ maxHeight: '60vh', objectFit: 'contain' }}
+        className="rounded-lg w-full h-auto"
       />
+
+      {/* Підпис та опис */}
       <div className="mt-4 text-center text-white text-xl font-bold">{selected.title}</div>
       <div className="mt-2 text-center text-white text-base italic">{selected.description}</div>
     </div>
