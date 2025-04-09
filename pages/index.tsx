@@ -69,12 +69,8 @@ export default function Home({ images }: { images: Image[] }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((img, index) => (
           <div key={index} className="rounded-xl overflow-hidden shadow-lg">
-            <img
-              src={img.src}
-              alt={img.title}
-              className="cursor-pointer hover:scale-105 transition"
-              onClick={() => setSelected(img)}
-            />
+            <ImageWithZoom image={img} onClick={() => setSelected(img)} />
+            
             <div className="p-2 text-center font-semibold">{img.title}</div>
             <div className="text-center pb-2">
               <a
