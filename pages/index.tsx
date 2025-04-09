@@ -95,37 +95,38 @@ export default function Home({ images }: { images: { src: string; title: string;
     onClick={() => setSelected(null)}
   >
     <div
-      className="relative w-full max-w-[80%] max-h-[90vh] bg-neutral-900 rounded-xl shadow-lg overflow-hidden"
-      onClick={(e) => e.stopPropagation()} // не закривати при кліку на контент
+      className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
+      onClick={(e) => e.stopPropagation()}
     >
-      {/* Хрестик */}
+      {/* Хрестик закрити */}
       <button
-        className="absolute top-3 right-3 text-white text-3xl hover:text-red-500 cursor-pointer z-50"
+        className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
         onClick={() => setSelected(null)}
       >
         &times;
       </button>
 
-      {/* Зображення з підписом поверх */}
-      <div className="relative w-full h-[60vh]">
+      {/* Зображення з текстом поверх */}
+      <div className="relative">
         <Image
           src={selected.src}
           alt={selected.title}
-          layout="fill"
-          objectFit="contain"
-          className="rounded-lg"
+          width={1200}
+          height={800}
+          className="w-full h-auto object-contain rounded-t-xl"
         />
 
-        {/* Титул і опис на фоні картинки */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4 text-center">
-          <div className="text-lg font-bold">{selected.title}</div>
-          <div className="text-sm italic">{selected.description}</div>
+        {/* Плашка з текстом */}
+        <div className="absolute bottom-0 w-full bg-black bg-opacity-60 text-white text-center p-4">
+          <div className="text-xl font-bold">{selected.title}</div>
+          <div className="text-sm italic mt-1">{selected.description}</div>
         </div>
       </div>
     </div>
   </div>,
   document.body
 )}
+
   
 </main> 
     );
