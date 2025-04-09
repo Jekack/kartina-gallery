@@ -107,21 +107,22 @@ export default function Home({ images }: { images: { src: string; title: string;
       </button>
 
       {/* Зображення з текстом поверх */}
-      <div className="relative">
-        <Image
-          src={selected.src}
-          alt={selected.title}
-          width={1200}
-          height={800}
-          className="w-full h-auto object-contain rounded-t-xl"
-        />
+     <div className="relative w-full aspect-[4/3] bg-gray">
+  <Image
+    src={selected.src}
+    alt={selected.title}
+    fill
+    className="object-contain rounded-t-xl"
+    sizes="(max-width: 768px) 100vw, 800px"
+  />
 
-        {/* Плашка з текстом */}
-        <div className="absolute bottom-0 w-full bg-black bg-opacity-60 text-white text-center p-4">
-          <div className="text-xl font-bold">{selected.title}</div>
-          <div className="text-sm italic mt-1">{selected.description}</div>
-        </div>
-      </div>
+  {/* Плашка поверх картинки */}
+  <div className="absolute bottom-0 w-full bg-gray bg-opacity-70 text-white text-center p-4">
+    <div className="text-xl font-bold">{selected.title}</div>
+    <div className="text-sm italic mt-1">{selected.description}</div>
+  </div>
+</div>
+
     </div>
   </div>,
   document.body
