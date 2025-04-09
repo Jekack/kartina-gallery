@@ -108,7 +108,7 @@ export default function Home({ images }: { images: Image[] }) {
    {selected && createPortal(
   <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
     <div
-      className="relative w-full max-w-[80%] max-h-[80vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
+      className="relative w-full max-w-[90%] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
       onClick={(e) => e.stopPropagation()}
     >
       {/* Стрілка вліво */}
@@ -128,7 +128,7 @@ export default function Home({ images }: { images: Image[] }) {
         <img
           src={selected.src}
           alt={selected.title}
-          className="object-contain max-w-full max-h-full mx-auto"
+          className="object-contain max-h-[80vh] max-w-full mx-auto"
         />
       </div>
 
@@ -139,29 +139,7 @@ export default function Home({ images }: { images: Image[] }) {
           const newIndex = (currentIndex + 1) % images.length;
           setSelected(images[newIndex]);
         }}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-      >
-        ▶
-      </button>
-
-      {/* Опис з прозорістю */}
-      <div className="w-full px-4 py-3 mt-3 bg-black bg-opacity-40 text-white text-center text-base rounded-b-xl">
-        <h2 className="text-xl font-semibold mb-1">{selected.title}</h2>
-        <p className="text-sm">{selected.description}</p>
-      </div>
-
-      {/* Кнопка закриття */}
-      <button
-        onClick={() => setSelected(null)}
-        className="absolute top-3 right-3 text-white bg-black bg-opacity-50 hover:bg-opacity-80 px-3 py-1 rounded"
-      >
-        ✕
-      </button>
-    </div>
-  </div>,
-  document.body
-)}
-
+        className="absolute right-3 top-1/2 transform -translate
 
 
     </main>
