@@ -89,23 +89,23 @@ export default function Home({ images }: { images: { src: string; title: string;
         ))}
       </div>
 
-      {selected && createPortal(
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4" onClick={() => setSelected(null)}>
-          <div className="max-w-4xl w-full">
-            <Image
-              src={selected.src}
-              alt={selected.title}
-              width={1000}
-              height={1000}
-              objectFit="contain"
-              className="rounded-lg"
-            />
-            <div className="mt-4 text-center text-white text-xl font-bold">{selected.title}</div>
-            <div className="mt-2 text-center text-white text-base italic">{selected.description}</div>
-          </div>
-        </div>,
-        document.body
-      )}
-    </main>
-  );
-}
+     {selected && createPortal(
+  <div
+    className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+    onClick={() => setSelected(null)}
+  >
+    <div className="w-full max-w-5xl bg-neutral-800 p-6 rounded-xl shadow-lg">
+      <Image
+        src={selected.src}
+        alt={selected.title}
+        width={1200}
+        height={800}
+        objectFit="contain"
+        className="rounded-lg"
+      />
+      <div className="mt-4 text-center text-white text-xl font-bold">{selected.title}</div>
+      <div className="mt-2 text-center text-white text-base italic">{selected.description}</div>
+    </div>
+  </div>,
+  document.body
+)}
