@@ -58,7 +58,6 @@ export default function Home({ images }: { images: { src: string; title: string;
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const { t }: any = useTranslation('common');
   const router = useRouter();
-
   const changeLanguage = (lng: string) => {
     router.push(router.pathname, router.asPath, { locale: lng });
   };
