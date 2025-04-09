@@ -1,32 +1,22 @@
 // components/ImageWithZoom.tsx
 import React from "react";
-import Image from "next/image";
 
-type Props = {
+interface ImageProps {
   image: {
-    url: string;
+    src: string;
     title: string;
+    description: string;
   };
-  zoomed: boolean;
-  setZoomed: (value: boolean) => void;
-};
+  onClick: () => void;
+}
 
-export default function ImageWithZoom({ image, zoomed, setZoomed }: Props) {
-  const handleClick = () => {
-    setZoomed(!zoomed);
-  };
-
+export default function ImageWithZoom({ image, onClick }: ImageProps) {
   return (
-    <div className={`transition-transform duration-300 ease-in-out ${zoomed ? "scale-150" : "scale-100"}`}>
-      <Image
-        src={image.url}
-        alt={image.title}
-        width={800}
-        height={600}
-        onClick={handleClick}
-        className="cursor-zoom-in rounded-lg shadow-lg"
-        priority
-      />
-    </div>
+    <img
+      src={image.src}
+      alt={image.title}
+      onClick={onClick}
+      className="cursor-pointer hover:scale-105 transition duration-300 w-full h-auto"
+    />
   );
 }
