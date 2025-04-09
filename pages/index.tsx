@@ -7,17 +7,16 @@ import { createPortal } from 'react-dom';
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
 const customTitles = [
-  "Стиль: Абстрактне мистецтво",
-  "Стиль: Акварель",
-  "Стиль: Мінімалізм",
-  "Стиль: Поп-арт",
-  "Стиль: Ретро стиль",
-  "Стиль: Футуризм",
-  "Стиль: Осінь",
-  "Стиль: Графіті",
-  "Стиль: Піксельна"
+  "Абстрактне мистецтво",
+  "Акварель",
+  "Мінімалізм",
+  "Поп-арт",
+  "Ретро стиль",
+  "Футуризм",
+  "Осінь",
+  "Графіті",
+  "Піксельна"
 ];
-
 
 const customDescriptions = [
   "Ця картина відображає хаос і гармонію одночасно, створюючи потужний емоційний ефект.",
@@ -76,56 +75,55 @@ export default function Home({ images }: { images: { src: string; title: string;
             <div className="p-2 text-center font-semibold">{img.title}</div>
             <div className="text-center pb-2">
               <a
-  href={customLinks[index]}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
->
-  Купити як NFT
-</a>
-
+                href={customLinks[index]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
+              >
+                Купити як NFT
+              </a>
             </div>
           </div>
         ))}
       </div>
 
-    {selected && createPortal(
-  <div
-    className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
-    onClick={() => setSelected(null)}
-  >
-    <div
-      className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
-        onClick={() => setSelected(null)}
-      >
-        &times;
-      </button>
+      {selected && createPortal(
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Хрестик закрити */}
+            <button
+              className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
+              onClick={() => setSelected(null)}
+            >
+              &times;
+            </button>
 
-      <div className="relative w-full aspect-[4/3] bg-neutral-800">
-        <Image
-          src={selected.src}
-          alt={selected.title}
-          fill
-          className="object-contain rounded-t-xl"
-          sizes="(max-width: 768px) 100vw, 800px"
-        />
+            {/* Зображення з текстом поверх */}
+            <div className="relative w-full aspect-[4/3] bg-gray">
+              <Image
+                src={selected.src}
+                alt={selected.title}
+                fill
+                className="object-contain rounded-t-xl"
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
 
-        <div className="absolute bottom-0 w-full bg-neutral-900 bg-opacity-70 text-white text-center p-4">
-          <div className="text-xl font-bold">{selected.title}</div>
-          <div className="text-sm italic mt-1">{selected.description}</div>
-        </div>
-      </div>
-    </div>
-  </div>,
-  document.body
-)}
-
-
-  
-</main> 
-    );
+              {/* Стильна градієнтна плашка */}
+              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white text-center p-4">
+                <div className="text-xl font-bold">{selected.title}</div>
+                <div className="text-sm italic mt-1">{selected.description}</div>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+    </main>
+  );
 }
