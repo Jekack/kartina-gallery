@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import ImageWithZoom from '../components/ImageWithZoom';
-import ImageGallery from '@/components/ImageGallery';
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
@@ -54,10 +52,9 @@ export async function getStaticProps() {
 export default function Home({ images }: { images: Image[] }) {
   const [selected, setSelected] = useState<Image | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6`}>
+    <main className={\`\${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6\`}>
       <div className="relative mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-center">Галерея КАРТИНИ 🖼️</h1>
         <button
@@ -67,19 +64,6 @@ export default function Home({ images }: { images: Image[] }) {
           {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
         </button>
       </div>
-
-      <div className="text-center mb-8">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Переглянути галерею
-        </button>
-      </div>
-
-      {isOpen && (
-        <ImageGallery />
-      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((img, index) => (
@@ -105,43 +89,57 @@ export default function Home({ images }: { images: Image[] }) {
         ))}
       </div>
 
-   {selected && createPortal(
-  <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-    <div
-      className="relative w-full max-w-[90%] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Стрілка вліво */}
-      <button
-        onClick={() => {
-          const currentIndex = images.findIndex(i => i.src === selected.src);
-          const newIndex = (currentIndex - 1 + images.length) % images.length;
-          setSelected(images[newIndex]);
-        }}
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-      >
-        ◀
-      </button>
+      {selected && createPortal(
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div
+            className="relative w-full max-w-[90%] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => {
+                const currentIndex = images.findIndex(i => i.src === selected.src);
+                const newIndex = (currentIndex - 1 + images.length) % images.length;
+                setSelected(images[newIndex]);
+              }}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
+            >
+              ◀
+            </button>
 
-      {/* Зображення */}
-      <div className="relative w-full h-full flex justify-center items-center">
-        <img
-          src={selected.src}
-          alt={selected.title}
-          className="object-contain max-h-[80vh] max-w-full mx-auto"
-        />
-      </div>
+            <div className="relative w-full h-full flex justify-center items-center">
+              <img
+                src={selected.src}
+                alt={selected.title}
+                className="object-contain max-h-[80vh] max-w-full mx-auto"
+              />
+            </div>
 
-      {/* Стрілка вправо */}
-      <button
-        onClick={() => {
-          const currentIndex = images.findIndex(i => i.src === selected.src);
-          const newIndex = (currentIndex + 1) % images.length;
-          setSelected(images[newIndex]);
-        }}
-        className="absolute right-3 top-1/2 transform -translate
+            <button
+              onClick={() => {
+                const currentIndex = images.findIndex(i => i.src === selected.src);
+                const newIndex = (currentIndex + 1) % images.length;
+                setSelected(images[newIndex]);
+              }}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
+            >
+              ▶
+            </button>
 
+            <div className="w-full px-4 py-3 mt-3 bg-black bg-opacity-40 text-white text-center text-base rounded-b-xl">
+              <h2 className="text-xl font-semibold mb-1">{selected.title}</h2>
+              <p className="text-sm">{selected.description}</p>
+            </div>
 
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-3 right-3 text-white bg-black bg-opacity-50 hover:bg-opacity-80 px-3 py-1 rounded"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
     </main>
   );
 }
