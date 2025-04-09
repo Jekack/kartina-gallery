@@ -7,13 +7,13 @@
     "build": "next build",
     "start": "next start"
   },
-  "dependencies": {
+ "dependencies": {
   "next": "13.4.7",
   "react": "18.2.0",
   "react-dom": "18.2.0",
-  "i18next": "22.4.15",
   "next-i18next": "13.1.6",
-  "react-i18next": "13.0.1"
+  "react-i18next": "13.0.1",
+  "i18next": "22.4.15"
 },
   "devDependencies": {
     "tailwindcss": "^3.3.0",
