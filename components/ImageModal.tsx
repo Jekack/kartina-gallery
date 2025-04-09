@@ -1,85 +1,76 @@
+// components/ImageModal.tsx
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 
-type ImageData = {
+interface Image {
   src: string;
-  title?: string;
-  description?: string;
-};
+  title: string;
+  description: string;
+}
 
-interface ImageModalProps {
-  images: ImageData[];
+interface Props {
+  images: Image[];
   initialIndex: number;
   onClose: () => void;
 }
 
-export default function ImageModal({ images, initialIndex, onClose }: ImageModalProps) {
+export default function ImageModal({ images, initialIndex, onClose }: Props) {
   const [index, setIndex] = useState(initialIndex);
+
+  const current = images[index];
+
+  const showPrev = () => setIndex((prev) => (prev - 1 + images.length) % images.length);
+  const showNext = () => setIndex((prev) => (prev + 1) % images.length);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [index]);
-
-  const nextImage = () => setIndex((prev) => (prev + 1) % images.length);
-  const prevImage = () => setIndex((prev) => (prev - 1 + images.length) % images.length);
-
-  const { src, title, description } = images[index];
+  }, []);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+    <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div
+        className="relative w-full max-w-[90%] max-h-[90vh] bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button onClick={onClose} className="absolute top-4 right-4 text-white hover:text-red-400 transition">
-          <X size={30} />
-        </button>
-
-        {/* Left arrow */}
         <button
-          onClick={prevImage}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-blue-300 transition"
+          onClick={onClose}
+          className="absolute top-3 right-3 text-white bg-black bg-opacity-50 hover:bg-opacity-80 px-3 py-1 rounded"
         >
-          <ArrowLeft size={40} />
+          ✕
         </button>
 
-        {/* Right arrow */}
         <button
-          onClick={nextImage}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-blue-300 transition"
+          onClick={showPrev}
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
         >
-          <ArrowRight size={40} />
+          ◀
         </button>
 
-        {/* Image Zoomable */}
-        <motion.img
-          key={src}
-          src={src}
-          alt={title}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl max-h-[80vh] rounded-2xl shadow-2xl cursor-zoom-in"
-        />
-
-        {/* Caption */}
-        <div className="absolute bottom-6 text-center text-white px-6">
-          <h2 className="text-2xl font-bold">{title}</h2>
-          <p className="text-md">{description}</p>
-          <span className="text-sm opacity-70">{index + 1} / {images.length}</span>
+        <div className="relative w-full h-full flex justify-center items-center">
+          <img
+            src={current.src}
+            alt={current.title}
+            className="object-contain max-h-[80vh] max-w-full mx-auto transition duration-300 ease-in-out"
+          />
         </div>
-      </motion.div>
-    </AnimatePresence>
+
+        <button
+          onClick={showNext}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
+        >
+          ▶
+        </button>
+
+        <div className="w-full px-4 py-3 mt-3 bg-black bg-opacity-40 text-white text-center text-base rounded-b-xl">
+          <h2 className="text-xl font-semibold mb-1">{current.title}</h2>
+          <p className="text-sm">{current.description}</p>
+        </div>
+      </div>
+    </div>
   );
 }
