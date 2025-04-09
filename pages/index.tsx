@@ -74,12 +74,12 @@ export default function Home({ images }: { images: { src: string; title: string;
           {images.map((img, index) => (
             <div key={index} className="rounded-xl overflow-hidden shadow-lg">
               <Image
-                src={img.src}
-                alt={img.title}
-                width={350}
-                height={350}
-                layout="responsive"
-                objectFit="cover"
+  src={img.src}
+  alt={img.title}
+  width={300}
+  height={300}
+  layout="responsive"
+  objectFit="cover"
                 className="cursor-pointer hover:scale-105 transition"
                 onClick={() => setSelected(img)}
               />
