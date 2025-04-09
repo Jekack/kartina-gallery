@@ -37,15 +37,15 @@ interface Image {
 
 export async function getStaticProps() {
   const images: Image[] = [
-    { src: '/img/art1.png', title: customTitles[0], description: customDescriptions[0] },
-    { src: '/img/art2.png', title: customTitles[1], description: customDescriptions[1] },
-    { src: '/img/art3.png', title: customTitles[2], description: customDescriptions[2] },
-    { src: '/img/art4.png', title: customTitles[3], description: customDescriptions[3] },
-    { src: '/img/art5.png', title: customTitles[4], description: customDescriptions[4] },
-    { src: '/img/art6.png', title: customTitles[5], description: customDescriptions[5] },
-    { src: '/img/art7.png', title: customTitles[6], description: customDescriptions[6] },
-    { src: '/img/art8.png', title: customTitles[7], description: customDescriptions[7] },
-    { src: '/img/art9.png', title: customTitles[8], description: customDescriptions[8] },
+    { src: '/img/abstract.png', title: customTitles[0], description: customDescriptions[0] },
+    { src: '/img/autumn.png', title: customTitles[1], description: customDescriptions[1] },
+    { src: '/img/futurism.png', title: customTitles[2], description: customDescriptions[2] },
+    { src: '/img/graffiti.png', title: customTitles[3], description: customDescriptions[3] },
+    { src: '/img/minimal.png', title: customTitles[4], description: customDescriptions[4] },
+    { src: '/img/pixel.png', title: customTitles[5], description: customDescriptions[5] },
+    { src: '/img/popart.png', title: customTitles[6], description: customDescriptions[6] },
+    { src: '/img/retro.png', title: customTitles[7], description: customDescriptions[7] },
+    { src: '/img/watercolor.png', title: customTitles[8], description: customDescriptions[8] },
   ];
 
   return { props: { images } };
