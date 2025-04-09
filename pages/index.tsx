@@ -95,30 +95,33 @@ export default function Home({ images }: { images: { src: string; title: string;
     onClick={() => setSelected(null)}
   >
     <div
-      className="relative w-full max-w-[80%] max-h-[80vh] overflow-y-auto bg-neutral-800 p-6 rounded-xl shadow-lg"
-      onClick={(e) => e.stopPropagation()} // щоб клік по вмісту не закривав
+      className="relative w-full max-w-[80%] max-h-[90vh] bg-neutral-900 rounded-xl shadow-lg overflow-hidden"
+      onClick={(e) => e.stopPropagation()} // не закривати при кліку на контент
     >
-      {/* Хрестик закрити */}
+      {/* Хрестик */}
       <button
-        className="absolute top-3 right-3 text-white text-2xl hover:text-red-500"
+        className="absolute top-3 right-3 text-white text-3xl hover:text-red-500 cursor-pointer z-50"
         onClick={() => setSelected(null)}
       >
         &times;
       </button>
 
-      {/* Зображення */}
-      <Image
-        src={selected.src}
-        alt={selected.title}
-        width={1200}
-        height={800}
-        style={{ maxHeight: '60vh', objectFit: 'contain' }}
-        className="rounded-lg w-full h-auto"
-      />
+      {/* Зображення з підписом поверх */}
+      <div className="relative w-full h-[60vh]">
+        <Image
+          src={selected.src}
+          alt={selected.title}
+          layout="fill"
+          objectFit="contain"
+          className="rounded-lg"
+        />
 
-      {/* Підпис та опис */}
-      <div className="mt-4 text-center text-white text-xl font-bold">{selected.title}</div>
-      <div className="mt-2 text-center text-white text-base italic">{selected.description}</div>
+        {/* Титул і опис на фоні картинки */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4 text-center">
+          <div className="text-lg font-bold">{selected.title}</div>
+          <div className="text-sm italic">{selected.description}</div>
+        </div>
+      </div>
     </div>
   </div>,
   document.body
