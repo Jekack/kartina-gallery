@@ -63,7 +63,7 @@ export default function Home({ images }: { images: { src: string; title: string;
           <h1 className="text-3xl sm:text-4xl font-bold text-center w-full">Галерея КАРТИНИ 🖼️</h1>
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="absolute right-0 top-12 border px-3 py-1 rounded"
+            className="absolute right-0 bottom-12 border px-3 py-1 rounded"
           >
             {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
           </button>
@@ -75,8 +75,8 @@ export default function Home({ images }: { images: { src: string; title: string;
               <Image
                 src={img.src}
                 alt={img.title}
-                width={400}
-                height={400}
+                width={350}
+                height={350}
                 layout="responsive"
                 objectFit="cover"
                 className="cursor-pointer hover:scale-105 transition"
