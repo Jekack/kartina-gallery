@@ -105,21 +105,22 @@ export default function Home({ images }: { images: { src: string; title: string;
               &times;
             </button>
 
-            {/* Зображення з текстом поверх */}
-            <div className="relative w-full aspect-[4/3] bg-gray">
-              <Image
-                src={selected.src}
-                alt={selected.title}
-                fill
-                className="object-contain rounded-t-xl"
-                sizes="(max-width: 768px) 100vw, 800px"
-              />
+            {/* Зображення */}
+<div className="relative w-full aspect-[4/3] bg-black">
+  <Image
+    src={selected.src}
+    alt={selected.title}
+    fill
+    className="object-contain rounded-t-xl"
+    sizes="(max-width: 768px) 100vw, 800px"
+  />
+</div>
 
-              {/* Стильна градієнтна плашка */}
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white text-center p-4">
-                <div className="text-xl font-bold">{selected.title}</div>
-                <div className="text-sm italic mt-1">{selected.description}</div>
-              </div>
+{/* Текст під зображенням */}
+<div className="bg-neutral-900 text-white text-center px-6 py-4">
+  <div className="text-2xl font-bold">{selected.title}</div>
+  <div className="text-base italic mt-2">{selected.description}</div>
+</div>
             </div>
           </div>
         </div>,
