@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import ImageWithZoom from "@/components/ImageWithZoom";
+import ImageModal from "@/components/ImageModal"; // 🆕 додаємо
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
@@ -51,11 +51,11 @@ export async function getStaticProps() {
 }
 
 export default function Home({ images }: { images: Image[] }) {
-  const [selected, setSelected] = useState<Image | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   return (
-    <main className={\`\${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6\`}>
+    <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6`}>
       <div className="relative mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-center">Галерея КАРТИНИ 🖼️</h1>
         <button
@@ -69,8 +69,7 @@ export default function Home({ images }: { images: Image[] }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((img, index) => (
           <div key={index} className="rounded-xl overflow-hidden shadow-lg">
-            <ImageWithZoom image={img} onClick={() => setSelected(img)} />
-            
+            <ImageWithZoom image={img} onClick={() => setSelectedIndex(index)} />
             <div className="p-2 text-center font-semibold">{img.title}</div>
             <div className="text-center pb-2">
               <a
@@ -86,56 +85,13 @@ export default function Home({ images }: { images: Image[] }) {
         ))}
       </div>
 
-      {selected && createPortal(
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-          <div
-            className="relative w-full max-w-[90%] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => {
-                const currentIndex = images.findIndex(i => i.src === selected.src);
-                const newIndex = (currentIndex - 1 + images.length) % images.length;
-                setSelected(images[newIndex]);
-              }}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-            >
-              ◀
-            </button>
-
-            <div className="relative w-full h-full flex justify-center items-center">
-              <img
-                src={selected.src}
-                alt={selected.title}
-                className="object-contain max-h-[80vh] max-w-full mx-auto"
-              />
-            </div>
-
-            <button
-              onClick={() => {
-                const currentIndex = images.findIndex(i => i.src === selected.src);
-                const newIndex = (currentIndex + 1) % images.length;
-                setSelected(images[newIndex]);
-              }}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-            >
-              ▶
-            </button>
-
-            <div className="w-full px-4 py-3 mt-3 bg-black bg-opacity-40 text-white text-center text-base rounded-b-xl">
-              <h2 className="text-xl font-semibold mb-1">{selected.title}</h2>
-              <p className="text-sm">{selected.description}</p>
-            </div>
-
-            <button
-              onClick={() => setSelected(null)}
-              className="absolute top-3 right-3 text-white bg-black bg-opacity-50 hover:bg-opacity-80 px-3 py-1 rounded"
-            >
-              ✕
-            </button>
-          </div>
-        </div>,
-        document.body
+      {/* 🆕 Підключаємо модалку */}
+      {selectedIndex !== null && (
+        <ImageModal
+          images={images}
+          initialIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+        />
       )}
     </main>
   );
