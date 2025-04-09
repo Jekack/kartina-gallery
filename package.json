@@ -13,7 +13,8 @@
   "react-dom": "18.2.0",
   "next-i18next": "^13.1.6",
   "react-i18next": "^13.2.2",
-  "i18next": "^23.6.2"
+  "i18next": "22.4.15"
+
 },
   "devDependencies": {
     "tailwindcss": "^3.3.0",
