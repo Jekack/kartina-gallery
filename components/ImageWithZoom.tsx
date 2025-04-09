@@ -1,4 +1,3 @@
-// components/ImageWithZoom.tsx
 import React from "react";
 
 interface ImageProps {
@@ -16,7 +15,8 @@ export default function ImageWithZoom({ image, onClick }: ImageProps) {
       src={image.src}
       alt={image.title}
       onClick={onClick}
-      className="cursor-pointer hover:scale-105 transition duration-300 w-full h-auto"
+      title="Натисни, щоб збільшити"
+      className="cursor-[zoom-in] hover:scale-105 transition-transform duration-300 shadow-lg rounded-xl w-full h-auto"
     />
   );
 }
