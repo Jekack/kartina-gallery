@@ -1,51 +1,69 @@
+import { useRef, useState } from 'react';
 
-import { useState } from 'react';
-import Image from 'next/image';
+interface ImageProps {
+  image: {
+    src: string;
+    title: string;
+    description: string;
+  };
+}
 
-export default function ImageWithZoom({ image }) {
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+export default function ImageWithZoom({ image }: ImageProps) {
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties | null>(null);
+  const [showZoom, setShowZoom] = useState(false);
 
-  // Function to track the cursor position
-  const handleMouseMove = (e) => {
-    const { left, top, width, height } = e.target.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
-    setCursorPosition({ x, y });
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const img = imgRef.current;
+    if (!img) return;
+
+    const rect = img.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const percentX = x / rect.width;
+    const percentY = y / rect.height;
+
+    const bgX = percentX * 100;
+    const bgY = percentY * 100;
+
+    const zoomBoxSize = 200;
+
+    setZoomStyle({
+      position: 'absolute',
+      top: y - zoomBoxSize / 2,
+      left: x - zoomBoxSize / 2,
+      width: zoomBoxSize,
+      height: zoomBoxSize,
+      border: '2px solid white',
+      backgroundImage: `url(${image.src})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: `${bgX}% ${bgY}%`,
+      backgroundSize: `${img.naturalWidth * 2}px ${img.naturalHeight * 2}px`,
+      pointerEvents: 'none',
+      zIndex: 10,
+    });
   };
 
   return (
     <div
-      className="relative w-full aspect-[4/3] bg-black"
+      className="relative w-full h-full flex justify-center items-center"
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsZoomed(true)}
-      onMouseLeave={() => setIsZoomed(false)}
+      onMouseEnter={() => setShowZoom(true)}
+      onMouseLeave={() => setShowZoom(false)}
     >
-      <Image
+      <img
+        ref={imgRef}
         src={image.src}
         alt={image.title}
-        width={800}
-        height={600}
-        className="object-contain rounded-t-xl"
-        sizes="(max-width: 768px) 100vw, 800px"
+        className="w-full h-auto max-h-[80vh] object-contain"
       />
-      
-      {isZoomed && (
+      {showZoom && zoomStyle && (
         <div
-          className="absolute border-2 border-white rounded-full"
-          style={{
-            left: `${cursorPosition.x - 50}px`, // Offset the zoom lens position
-            top: `${cursorPosition.y - 50}px`,
-            width: '100px', // Size of the lens
-            height: '100px',
-            backgroundImage: `url(${image.src})`,
-            backgroundSize: `${800}%`, // Zoom level of the image
-            backgroundPosition: `-${cursorPosition.x * 8}px -${cursorPosition.y * 8}px`,
-            pointerEvents: 'none', // Prevent blocking the cursor with the zoom lens
-          }}
+          className="rounded-md shadow-lg"
+          style={zoomStyle}
         />
       )}
     </div>
   );
 }
-    
