@@ -98,7 +98,6 @@ export default function Home({ images }: { images: { src: string; title: string;
       className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
       onClick={(e) => e.stopPropagation()}
     >
-      {/* Хрестик закрити */}
       <button
         className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
         onClick={() => setSelected(null)}
@@ -106,27 +105,25 @@ export default function Home({ images }: { images: { src: string; title: string;
         &times;
       </button>
 
-      {/* Зображення з текстом поверх */}
-     <div className="relative w-full aspect-[4/3] bg-gray">
-  <Image
-    src={selected.src}
-    alt={selected.title}
-    fill
-    className="object-contain rounded-t-xl"
-    sizes="(max-width: 768px) 100vw, 800px"
-  />
+      <div className="relative w-full aspect-[4/3] bg-neutral-800">
+        <Image
+          src={selected.src}
+          alt={selected.title}
+          fill
+          className="object-contain rounded-t-xl"
+          sizes="(max-width: 768px) 100vw, 800px"
+        />
 
-  {/* Плашка поверх картинки */}
-  <div className="absolute bottom-0 w-full bg-gray bg-opacity-70 text-white text-center p-4">
-    <div className="text-xl font-bold">{selected.title}</div>
-    <div className="text-sm italic mt-1">{selected.description}</div>
-  </div>
-</div>
-
+        <div className="absolute bottom-0 w-full bg-neutral-900 bg-opacity-70 text-white text-center p-4">
+          <div className="text-xl font-bold">{selected.title}</div>
+          <div className="text-sm italic mt-1">{selected.description}</div>
+        </div>
+      </div>
     </div>
   </div>,
   document.body
 )}
+
 
   
 </main> 
