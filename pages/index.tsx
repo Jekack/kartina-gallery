@@ -108,7 +108,7 @@ export default function Home({ images }: { images: Image[] }) {
     {selected && createPortal(
   <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
     <div
-      className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
+      className="relative w-full max-w-[100%] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
       onClick={(e) => e.stopPropagation()}
     >
       {/* Кнопка закриття */}
@@ -119,38 +119,12 @@ export default function Home({ images }: { images: Image[] }) {
         ✕
       </button>
 
-      {/* Стрілка вліво */}
-      <button
-        onClick={() => {
-          const currentIndex = images.findIndex(i => i.src === selected.src);
-          const newIndex = (currentIndex - 1 + images.length) % images.length;
-          setSelected(images[newIndex]);
-        }}
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-      >
-        ◀
-      </button>
-
       {/* Зображення */}
-      <div className="relative w-full h-full max-h-[70vh] overflow-hidden">
-        <img
-          src={selected.src}
-          alt={selected.title}
-          className="object-contain max-h-[70vh] w-auto mx-4"
-        />
-      </div>
-
-      {/* Стрілка вправо */}
-      <button
-        onClick={() => {
-          const currentIndex = images.findIndex(i => i.src === selected.src);
-          const newIndex = (currentIndex + 1) % images.length;
-          setSelected(images[newIndex]);
-        }}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 hover:text-blue-400"
-      >
-        ▶
-      </button>
+      <img
+        src={selected.src}
+        alt={selected.title}
+        className="object-contain max-h-[70vh] w-auto mx-4"
+      />
 
       {/* Опис з прозорістю */}
       <div className="w-full px-4 py-3 mt-3 bg-black bg-opacity-50 text-white text-center text-base rounded-b-xl">
@@ -161,6 +135,7 @@ export default function Home({ images }: { images: Image[] }) {
   </div>,
   document.body
 )}
+
 
 
     </main>
