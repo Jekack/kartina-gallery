@@ -33,7 +33,7 @@ const customDescriptions = [
   "Легкість акварелі передає відчуття спокою, мрійливості та прозорості."
 ];
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({ locale }) {
   const imagesDir = path.join(process.cwd(), 'public/img');
   const files = fs.readdirSync(imagesDir);
   const images = files
@@ -43,7 +43,6 @@ export async function getStaticProps({ locale }: { locale: string }) {
       title: customTitles[index] || `Картина ${index + 1}`,
       description: customDescriptions[index] || ''
     }));
-
   return {
     props: {
       images,
@@ -52,33 +51,31 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-export default function Home({ images }: { images: { src: string; title: string; description: string }[] }) {
-  const [selected, setSelected] = useState<null | { src: string; title: string; description: string }>(null);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
- const { t }: any = useTranslation('common');
+export default function Home({ images }) {
+  const [selected, setSelected] = useState(null);
+  const [theme, setTheme] = useState('dark');
+  const { t } = useTranslation('common');
   const router = useRouter();
 
-  const changeLanguage = (lng: string) => {
+  const changeLanguage = (lng) => {
     router.push(router.pathname, router.asPath, { locale: lng });
   };
 
   return (
-    <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-8`}>
-      <div className="flex justify-between items-center mb-8 relative">
+    <main className={\`\${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-8\`}>
+      <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-center w-full">Галерея КАРТИНИ 🖼️</h1>
-        
-        {/* Перемикач теми */}
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="absolute top-16 right-8 border px-3 py-1 rounded"
-        >
-          {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
-        </button>
-
-        {/* Перемикач мови */}
-        <div className="absolute top-16 left-8">
-          <button onClick={() => changeLanguage('uk')} className="px-2">🇺🇦</button>
-          <button onClick={() => changeLanguage('en')} className="px-2">🇬🇧</button>
+        <div className="flex flex-col items-end absolute right-8 top-8 gap-2">
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="border px-3 py-1 rounded"
+          >
+            {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
+          </button>
+          <select onChange={(e) => changeLanguage(e.target.value)} className="text-black rounded px-2 py-1 mt-2">
+            <option value="uk">🇺🇦 Українська</option>
+            <option value="en">🇬🇧 English</option>
+          </select>
         </div>
       </div>
 
@@ -88,8 +85,8 @@ export default function Home({ images }: { images: { src: string; title: string;
             <Image
               src={img.src}
               alt={img.title}
-              width={400}
-              height={400}
+              width={500}
+              height={500}
               layout="responsive"
               objectFit="cover"
               className="cursor-pointer hover:scale-105 transition"
@@ -103,7 +100,7 @@ export default function Home({ images }: { images: { src: string; title: string;
                 rel="noopener noreferrer"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
               >
-                {t('buyButton') || 'Купити як NFT'}
+                {t('buy_nft')}
               </a>
             </div>
           </div>
@@ -115,19 +112,10 @@ export default function Home({ images }: { images: { src: string; title: string;
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
           onClick={() => setSelected(null)}
         >
-          <div
-            className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Хрестик */}
-            <button
-              className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
-              onClick={() => setSelected(null)}
-            >
+          <div className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10" onClick={() => setSelected(null)}>
               &times;
             </button>
-
-            {/* Картинка */}
             <div className="relative w-full aspect-[4/3] bg-black">
               <Image
                 src={selected.src}
@@ -137,8 +125,6 @@ export default function Home({ images }: { images: { src: string; title: string;
                 sizes="(max-width: 768px) 100vw, 800px"
               />
             </div>
-
-            {/* Текст під зображенням */}
             <div className="bg-neutral-900 text-white text-center px-6 py-4">
               <div className="text-2xl font-bold">{selected.title}</div>
               <div className="text-base italic mt-2">{selected.description}</div>
