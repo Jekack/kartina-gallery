@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import fs from 'fs';
 import path from 'path';
@@ -34,7 +33,7 @@ const customDescriptions = [
   "Легкість акварелі передає відчуття спокою, мрійливості та прозорості."
 ];
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
   const imagesDir = path.join(process.cwd(), 'public/img');
   const files = fs.readdirSync(imagesDir);
   const images = files
@@ -58,40 +57,29 @@ export default function Home({ images }: { images: { src: string; title: string;
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const { t }: any = useTranslation('common');
   const router = useRouter();
+
   const changeLanguage = (lng: string) => {
     router.push(router.pathname, router.asPath, { locale: lng });
   };
 
   return (
     <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-8`}>
-      <Head>
-        <title>Галерея КАРТИНИ | NFT-мистецтво онлайн</title>
-        <meta name="description" content="Унікальна NFT-галерея сучасного мистецтва. Купуй або додай до своєї колекції!" />
-        <meta name="keywords" content="NFT, мистецтво, галерея, цифрові картини, українське мистецтво" />
-        <meta name="author" content="Головний герой" />
-        <meta property="og:title" content="Галерея КАРТИНИ" />
-        <meta property="og:description" content="Сучасне NFT-мистецтво від Головного героя." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://kartina-gallery.vercel.app" />
-        <meta property="og:image" content="/preview.jpg" />
-      </Head>
-
-      <div className="flex justify-between items-start mb-8 relative">
-        <h1 className="text-4xl font-bold text-center w-full mt-4">{t('title')}</h1>
-
-        {/* Перемикач мови */}
-        <div className="absolute left-8 top-4 flex space-x-2">
-          <button onClick={() => changeLanguage('uk')} className="border px-2 py-1 rounded">🇺🇦</button>
-          <button onClick={() => changeLanguage('en')} className="border px-2 py-1 rounded">🇬🇧</button>
-        </div>
-
+      <div className="flex justify-between items-center mb-8 relative">
+        <h1 className="text-4xl font-bold text-center w-full">Галерея КАРТИНИ 🖼️</h1>
+        
         {/* Перемикач теми */}
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="absolute right-8 top-16 border px-3 py-1 rounded"
+          className="absolute top-16 right-8 border px-3 py-1 rounded"
         >
-          {theme === 'dark' ? t('themeLight') : t('themeDark')}
+          {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
         </button>
+
+        {/* Перемикач мови */}
+        <div className="absolute top-16 left-8">
+          <button onClick={() => changeLanguage('uk')} className="px-2">🇺🇦</button>
+          <button onClick={() => changeLanguage('en')} className="px-2">🇬🇧</button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -100,8 +88,8 @@ export default function Home({ images }: { images: { src: string; title: string;
             <Image
               src={img.src}
               alt={img.title}
-              width={350}
-              height={350}
+              width={400}
+              height={400}
               layout="responsive"
               objectFit="cover"
               className="cursor-pointer hover:scale-105 transition"
@@ -115,7 +103,7 @@ export default function Home({ images }: { images: { src: string; title: string;
                 rel="noopener noreferrer"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
               >
-                {t('buyButton')}
+                {t('buyButton') || 'Купити як NFT'}
               </a>
             </div>
           </div>
@@ -131,6 +119,7 @@ export default function Home({ images }: { images: { src: string; title: string;
             className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Хрестик */}
             <button
               className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
               onClick={() => setSelected(null)}
@@ -138,16 +127,18 @@ export default function Home({ images }: { images: { src: string; title: string;
               &times;
             </button>
 
-            <div className="relative w-full aspect-[4/3] bg-black rounded-t-xl overflow-hidden">
+            {/* Картинка */}
+            <div className="relative w-full aspect-[4/3] bg-black">
               <Image
                 src={selected.src}
                 alt={selected.title}
                 fill
-                className="object-contain"
+                className="object-contain rounded-t-xl"
                 sizes="(max-width: 768px) 100vw, 800px"
               />
             </div>
 
+            {/* Текст під зображенням */}
             <div className="bg-neutral-900 text-white text-center px-6 py-4">
               <div className="text-2xl font-bold">{selected.title}</div>
               <div className="text-base italic mt-2">{selected.description}</div>
