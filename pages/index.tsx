@@ -59,15 +59,16 @@ export default function Home({ images }: { images: { src: string; title: string;
       </Head>
 
       <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6`}>
-        <div className="flex justify-between items-center mb-6 relative">
-          <h1 className="text-3xl sm:text-4xl font-bold text-center w-full">Галерея КАРТИНИ 🖼️</h1>
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="absolute right-0 bottom-12 border px-3 py-1 rounded"
-          >
-            {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
-          </button>
-        </div>
+        <div className="relative mb-10">
+  <h1 className="text-3xl sm:text-4xl font-bold text-center">Галерея КАРТИНИ 🖼️</h1>
+  <button
+    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+    className="fixed top-5 right-5 z-50 border px-3 py-1 rounded bg-neutral-800 text-white shadow-md hover:bg-neutral-700"
+  >
+    {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
+  </button>
+</div>
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {images.map((img, index) => (
