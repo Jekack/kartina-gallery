@@ -74,7 +74,15 @@ export default function Home({ images }: { images: { src: string; title: string;
             />
             <div className="p-2 text-center font-semibold">{img.title}</div>
             <div className="text-center pb-2">
-              <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded">Купити як NFT</button>
+              <a
+  href={customLinks[index]}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
+>
+  Купити як NFT
+</a>
+
             </div>
           </div>
         ))}
