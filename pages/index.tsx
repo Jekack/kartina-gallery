@@ -30,7 +30,6 @@ const customDescriptions = [
   "Легкість акварелі передає відчуття спокою, мрійливості та прозорості."
 ];
 
-
 export async function getStaticProps() {
   const imagesDir = path.join(process.cwd(), 'public/img');
   const files = fs.readdirSync(imagesDir);
@@ -88,7 +87,7 @@ export default function Home({ images }: { images: { src: string; title: string;
         ))}
       </div>
 
-      {selected && createPortal(
+      {selected ? createPortal(
         <div
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
           onClick={() => setSelected(null)}
@@ -106,26 +105,25 @@ export default function Home({ images }: { images: { src: string; title: string;
             </button>
 
             {/* Зображення */}
-<div className="relative w-full aspect-[4/3] bg-black">
-  <Image
-    src={selected.src}
-    alt={selected.title}
-    fill
-    className="object-contain rounded-t-xl"
-    sizes="(max-width: 768px) 100vw, 800px"
-  />
-</div>
+            <div className="relative w-full aspect-[4/3] bg-black rounded-t-xl overflow-hidden">
+              <Image
+                src={selected.src}
+                alt={selected.title}
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </div>
 
-{/* Текст під зображенням */}
-<div className="bg-neutral-900 text-white text-center px-6 py-4">
-  <div className="text-2xl font-bold">{selected.title}</div>
-  <div className="text-base italic mt-2">{selected.description}</div>
-</div>
+            {/* Текст під зображенням */}
+            <div className="bg-neutral-900 text-white text-center px-6 py-4">
+              <div className="text-2xl font-bold">{selected.title}</div>
+              <div className="text-base italic mt-2">{selected.description}</div>
             </div>
           </div>
         </div>,
         document.body
-      )}
+      ) : null}
     </main>
   );
 }
