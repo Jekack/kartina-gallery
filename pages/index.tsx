@@ -1,8 +1,11 @@
+import Head from 'next/head';
 import Image from 'next/image';
 import fs from 'fs';
 import path from 'path';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
@@ -30,7 +33,7 @@ const customDescriptions = [
   "Легкість акварелі передає відчуття спокою, мрійливості та прозорості."
 ];
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
   const imagesDir = path.join(process.cwd(), 'public/img');
   const files = fs.readdirSync(imagesDir);
   const images = files
@@ -40,22 +43,41 @@ export async function getStaticProps() {
       title: customTitles[index] || `Картина ${index + 1}`,
       description: customDescriptions[index] || ''
     }));
-  return { props: { images } };
+
+  return {
+    props: {
+      images,
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  };
 }
 
 export default function Home({ images }: { images: { src: string; title: string; description: string }[] }) {
   const [selected, setSelected] = useState<null | { src: string; title: string; description: string }>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const { t } = useTranslation('common');
 
   return (
     <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-8`}>
+      <Head>
+        <title>Галерея КАРТИНИ | NFT-мистецтво онлайн</title>
+        <meta name="description" content="Унікальна NFT-галерея сучасного мистецтва. Купуй або додай до своєї колекції!" />
+        <meta name="keywords" content="NFT, мистецтво, галерея, цифрові картини, українське мистецтво" />
+        <meta name="author" content="Головний герой" />
+        <meta property="og:title" content="Галерея КАРТИНИ" />
+        <meta property="og:description" content="Сучасне NFT-мистецтво від Головного героя." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kartina-gallery.vercel.app" />
+        <meta property="og:image" content="/preview.jpg" />
+      </Head>
+
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-center w-full">Галерея КАРТИНИ 🖼️</h1>
+        <h1 className="text-4xl font-bold text-center w-full">{t('title')}</h1>
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           className="absolute right-8 top-8 border px-3 py-1 rounded"
         >
-          {theme === 'dark' ? '☀️ Світла тема' : '🌙 Темна тема'}
+          {theme === 'dark' ? t('themeLight') : t('themeDark')}
         </button>
       </div>
 
@@ -80,7 +102,7 @@ export default function Home({ images }: { images: { src: string; title: string;
                 rel="noopener noreferrer"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded"
               >
-                Купити як NFT
+                {t('buyButton')}
               </a>
             </div>
           </div>
@@ -96,7 +118,6 @@ export default function Home({ images }: { images: { src: string; title: string;
             className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Хрестик закрити */}
             <button
               className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
               onClick={() => setSelected(null)}
@@ -104,7 +125,6 @@ export default function Home({ images }: { images: { src: string; title: string;
               &times;
             </button>
 
-            {/* Зображення */}
             <div className="relative w-full aspect-[4/3] bg-black rounded-t-xl overflow-hidden">
               <Image
                 src={selected.src}
@@ -115,7 +135,6 @@ export default function Home({ images }: { images: { src: string; title: string;
               />
             </div>
 
-            {/* Текст під зображенням */}
             <div className="bg-neutral-900 text-white text-center px-6 py-4">
               <div className="text-2xl font-bold">{selected.title}</div>
               <div className="text-base italic mt-2">{selected.description}</div>
