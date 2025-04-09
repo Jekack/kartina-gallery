@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import ImageWithZoom from '../components/ImageWithZoom';
+import ImageGallery from '@/components/ImageGallery';
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
@@ -53,6 +54,7 @@ export async function getStaticProps() {
 export default function Home({ images }: { images: Image[] }) {
   const [selected, setSelected] = useState<Image | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6`}>
@@ -66,27 +68,18 @@ export default function Home({ images }: { images: Image[] }) {
         </button>
       </div>
 
-      import React, { useState } from 'react';
-import ImageGallery from '@/components/ImageGallery'; // шлях адаптуй до свого проєкту
-
-export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-      >
-        Переглянути галерею
-      </button>
+      <div className="text-center mb-8">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Переглянути галерею
+        </button>
+      </div>
 
       {isOpen && (
         <ImageGallery />
       )}
-    </div>
-  );
-}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((img, index) => (
@@ -125,7 +118,6 @@ export default function Home() {
               &times;
             </button>
 
-            {/* Use ImageWithZoom component */}
             <ImageWithZoom image={selected} />
 
             <div className="bg-neutral-900 text-white text-center px-6 py-4 mt-4">
