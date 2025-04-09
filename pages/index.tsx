@@ -105,10 +105,10 @@ export default function Home({ images }: { images: Image[] }) {
         ))}
       </div>
 
-    {selected && createPortal(
+   {selected && createPortal(
   <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
     <div
-      className="relative w-full max-w-[90%] max-h-[80vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
+      className="relative w-full max-w-[80%] max-h-[80vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col items-center"
       onClick={(e) => e.stopPropagation()}
     >
       {/* Стрілка вліво */}
@@ -124,11 +124,11 @@ export default function Home({ images }: { images: Image[] }) {
       </button>
 
       {/* Зображення */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full flex justify-center items-center">
         <img
           src={selected.src}
           alt={selected.title}
-          className="object-contain w-full h-auto mx-auto"
+          className="object-contain max-w-full max-h-full mx-auto"
         />
       </div>
 
@@ -161,6 +161,7 @@ export default function Home({ images }: { images: Image[] }) {
   </div>,
   document.body
 )}
+
 
 
     </main>
