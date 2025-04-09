@@ -98,40 +98,38 @@ export default function Home({ images }: { images: { src: string; title: string;
         </div>
 
         {selected && createPortal(
-          <div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelected(null)}
-          >
-            <div
-              className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Закрити */}
-              <button
-                className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
-                onClick={() => setSelected(null)}
-              >
-                &times;
-              </button>
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+  <div
+    className="relative w-full max-w-[900px] max-h-[90vh] overflow-hidden bg-neutral-900 rounded-xl shadow-lg flex flex-col"
+    onClick={(e) => e.stopPropagation()}
+  >
+    {/* Закрити */}
+    <button
+      className="absolute top-3 right-3 text-white text-2xl hover:text-red-500 z-10"
+      onClick={() => setSelected(null)}
+    >
+      &times;
+    </button>
 
-              {/* Зображення */}
-              <div className="relative w-full aspect-[4/3] bg-black">
-                <Image
-                  src={selected.src}
-                  alt={selected.title}
-                  fill
-                  className="object-contain rounded-t-xl"
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
-              </div>
+    {/* Зображення */}
+    <div className="relative w-full aspect-[4/3] bg-black">
+      <Image
+        src={selected.src}
+        alt={selected.title}
+        width={800}
+        height={600}
+        className="object-contain rounded-t-xl"
+        sizes="(max-width: 768px) 100vw, 800px"
+      />
+    </div>
 
-              {/* Текст під зображенням */}
-              <div className="bg-neutral-900 text-white text-center px-6 py-4">
-                <div className="text-2xl font-bold">{selected.title}</div>
-                <div className="text-base italic mt-2">{selected.description}</div>
-              </div>
-            </div>
-          </div>,
+    {/* Текст під зображенням */}
+    <div className="bg-neutral-900 text-white text-center px-6 py-4 mt-4">
+      <div className="text-2xl font-bold">{selected.title}</div>
+      <div className="text-base italic mt-2">{selected.description}</div>
+    </div>
+  </div>
+</div>,
           document.body
         )}
       </main>
