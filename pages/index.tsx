@@ -4,6 +4,8 @@ import path from 'path';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
+const customLinks = Array(9).fill("https://t.me/jeffersonx");
+
 const customTitles = [
   "Абстрактне мистецтво",
   "Акварель",
