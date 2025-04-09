@@ -29,25 +29,31 @@ const customDescriptions = [
   "Легкість акварелі передає відчуття спокою, мрійливості та прозорості."
 ];
 
+interface Image {
+  src: string;
+  title: string;
+  description: string;
+}
+
 export async function getStaticProps() {
-  const images = [
-    { src: '/img/art1.jpg', title: customTitles[0], description: customDescriptions[0] },
-    { src: '/img/art2.jpg', title: customTitles[1], description: customDescriptions[1] },
-    { src: '/img/art3.jpg', title: customTitles[2], description: customDescriptions[2] },
-    { src: '/img/art4.jpg', title: customTitles[3], description: customDescriptions[3] },
-    { src: '/img/art5.jpg', title: customTitles[4], description: customDescriptions[4] },
-    { src: '/img/art6.jpg', title: customTitles[5], description: customDescriptions[5] },
-    { src: '/img/art7.jpg', title: customTitles[6], description: customDescriptions[6] },
-    { src: '/img/art8.jpg', title: customTitles[7], description: customDescriptions[7] },
-    { src: '/img/art9.jpg', title: customTitles[8], description: customDescriptions[8] },
+  const images: Image[] = [
+    { src: '/img/art1.png', title: customTitles[0], description: customDescriptions[0] },
+    { src: '/img/art2.png', title: customTitles[1], description: customDescriptions[1] },
+    { src: '/img/art3.png', title: customTitles[2], description: customDescriptions[2] },
+    { src: '/img/art4.png', title: customTitles[3], description: customDescriptions[3] },
+    { src: '/img/art5.png', title: customTitles[4], description: customDescriptions[4] },
+    { src: '/img/art6.png', title: customTitles[5], description: customDescriptions[5] },
+    { src: '/img/art7.png', title: customTitles[6], description: customDescriptions[6] },
+    { src: '/img/art8.png', title: customTitles[7], description: customDescriptions[7] },
+    { src: '/img/art9.png', title: customTitles[8], description: customDescriptions[8] },
   ];
 
   return { props: { images } };
 }
 
-export default function Home({ images }) {
-  const [selected, setSelected] = useState(null);
-  const [theme, setTheme] = useState('dark');
+export default function Home({ images }: { images: Image[] }) {
+  const [selected, setSelected] = useState<Image | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   return (
     <main className={`${theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-black'} min-h-screen p-6`}>
@@ -112,4 +118,3 @@ export default function Home({ images }) {
     </main>
   );
 }
-    
