@@ -66,6 +66,28 @@ export default function Home({ images }: { images: Image[] }) {
         </button>
       </div>
 
+      import React, { useState } from 'react';
+import ImageGallery from '@/components/ImageGallery'; // шлях адаптуй до свого проєкту
+
+export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setIsOpen(true)}
+        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+      >
+        Переглянути галерею
+      </button>
+
+      {isOpen && (
+        <ImageGallery />
+      )}
+    </div>
+  );
+}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((img, index) => (
           <div key={index} className="rounded-xl overflow-hidden shadow-lg">
