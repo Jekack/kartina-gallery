@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import ImageWithZoom from "@/components/ImageWithZoom";
 
 const customLinks = Array(9).fill("https://t.me/jeffersonx");
 
