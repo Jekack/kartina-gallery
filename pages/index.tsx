@@ -54,7 +54,7 @@ export async function getStaticProps({ locale }) {
 export default function Home({ images }) {
   const [selected, setSelected] = useState(null);
   const [theme, setTheme] = useState('dark');
-  const { t } = useTranslation('common');
+  const { t }: { t: (key: string) => string } = useTranslation('common');
   const router = useRouter();
 
   const changeLanguage = (lng) => {
